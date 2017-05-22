@@ -72,7 +72,7 @@ function keypress_handler(event) {
         angle += 5;
     }
 }
-
+/*
 function voor() {
     console.log("full speed servoPosition");
     var myData = 'column_name=' + 'servoPosition' +'&'+ 'value='+ 180;
@@ -243,7 +243,7 @@ function stop() {
     });
 
 }
-
+*/
 function canGame() {
     return "getGamepads" in navigator;
 }
@@ -275,7 +275,8 @@ if(canGame()) {
     function checkGamepad() {
         var gp = navigator.getGamepads()[0];
         var axeLF = gp.axes[0];
-
+		var axeRF = gp.axes[2];
+		var a =0;
         if (gp.buttons[7].value > 0) {
             mod = 1;
             voor();
@@ -297,6 +298,7 @@ if(canGame()) {
             angle += 5;
             rechts();
             console.log("stop");
+		
         } else {
             input.left = false;
             input.right = false;
@@ -304,6 +306,18 @@ if(canGame()) {
 
             stop();
         }
+		if (axeRF != 0){
+			a += axeRF;
+			a = a * 100
+			a = map_range(a, -100, 100, 0, 180);
+			console.log(a);
+		}
+		
+		
 
     }
+}
+
+function map_range(value, low1, high1, low2, high2) {
+    return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
 }
